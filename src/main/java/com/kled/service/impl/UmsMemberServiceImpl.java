@@ -1,6 +1,6 @@
 package com.kled.service.impl;
 
-import com.kled.common.CommonResult;
+import com.kled.common.api.CommonResult;
 import com.kled.service.RedisService;
 import com.kled.service.UmsMemberService;
 import org.springframework.beans.factory.annotation.Autowired;

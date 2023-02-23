@@ -1,11 +1,10 @@
 package com.kled.controller;
 
-import com.kled.common.CommonResult;
+import com.kled.common.api.CommonResult;
 import com.kled.service.UmsMemberService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 @Api(tags = "UmsMemberController",description = "会员登录注册管理")

@@ -1,7 +1,7 @@
 package com.kled.controller;
 
-import com.kled.common.CommonPage;
-import com.kled.common.CommonResult;
+import com.kled.common.api.CommonPage;
+import com.kled.common.api.CommonResult;
 import com.kled.mbg.model.PmsBrand;
 import com.kled.service.PmsBrandService;
 import io.swagger.annotations.Api;

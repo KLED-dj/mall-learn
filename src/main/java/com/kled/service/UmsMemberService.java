@@ -1,6 +1,6 @@
 package com.kled.service;
 
-import com.kled.common.CommonResult;
+import com.kled.common.api.CommonResult;
 
 public interface UmsMemberService {
     /**
