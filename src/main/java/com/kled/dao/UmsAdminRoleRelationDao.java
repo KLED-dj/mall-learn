@@ -2,6 +2,7 @@ package com.kled.dao;
 
 import com.kled.mbg.model.UmsPermission;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.context.annotation.Bean;
 
 import java.util.List;
 

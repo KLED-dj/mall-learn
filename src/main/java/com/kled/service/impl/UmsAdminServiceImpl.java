@@ -41,7 +41,7 @@ public class UmsAdminServiceImpl implements UmsAdminService {
     @Autowired
     private UmsAdminMapper adminMapper;
     @Autowired
-    private UmsAdminRoleRelationDao umsAdminRoleRelationDao;
+    private UmsAdminRoleRelationDao adminRoleRelationDao;
 
 
     @Override
@@ -68,6 +68,7 @@ public class UmsAdminServiceImpl implements UmsAdminService {
         if(umsAdminList.size()>0){
             return null;
         }
+        //将密码进行加密操作
         String encode = passwordEncoder.encode(umsAdmin.getPassword());
         umsAdmin.setPassword(encode);
         adminMapper.insert(umsAdmin);
@@ -93,6 +94,6 @@ public class UmsAdminServiceImpl implements UmsAdminService {
 
     @Override
     public List<UmsPermission> getPermissionList(Long adminId) {
-        return umsAdminRoleRelationDao.getPermissionList(adminId);
+        return adminRoleRelationDao.getPermissionList(adminId);
     }
 }

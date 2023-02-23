@@ -5,6 +5,6 @@ import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-@MapperScan("com.kled.mbg.mapper")
+@MapperScan({"com.kled.mbg.mapper","com.kled.dao"})
 public class MyBatisConfig {
 }
