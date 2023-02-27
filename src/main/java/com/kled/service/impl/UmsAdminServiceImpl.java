@@ -6,6 +6,7 @@ import com.kled.mbg.mapper.UmsAdminMapper;
 import com.kled.mbg.model.UmsAdmin;
 import com.kled.mbg.model.UmsAdminExample;
 import com.kled.mbg.model.UmsPermission;
+import com.kled.mbg.model.UmsRole;
 import com.kled.service.UmsAdminService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -95,5 +96,10 @@ public class UmsAdminServiceImpl implements UmsAdminService {
     @Override
     public List<UmsPermission> getPermissionList(Long adminId) {
         return adminRoleRelationDao.getPermissionList(adminId);
+    }
+
+    @Override
+    public List<UmsRole> getRoleList(Long adminId) {
+        return adminRoleRelationDao.getRoleList(adminId);
     }
 }

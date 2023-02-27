@@ -1,8 +1,9 @@
 package com.kled.dao;
 
 import com.kled.mbg.model.UmsPermission;
+import com.kled.mbg.model.UmsRole;
 import org.apache.ibatis.annotations.Param;
-import org.springframework.context.annotation.Bean;
+import org.springframework.security.core.parameters.P;
 
 import java.util.List;
 
@@ -14,4 +15,9 @@ public interface UmsAdminRoleRelationDao {
      * 获取用户所有权限（包括+-权限）
      */
     List<UmsPermission> getPermissionList(@Param("adminId") Long adminId);
+    /**
+     * 获取用户所有角色
+     */
+    List<UmsRole> getRoleList(@Param("adminId") Long adminId);
+
 }
