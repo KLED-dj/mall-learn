@@ -11,10 +11,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -37,6 +34,40 @@ public class PmsProductController {
                                                         @RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum) {
         List<PmsProduct> productList = productService.list(productQueryParam, pageSize, pageNum);
         return CommonResult.success(CommonPage.restPage(productList));
+    }
+
+    @ApiOperation("批量上下架商品")
+    @PostMapping("/update/publishStatus")
+    public CommonResult updatePublishStatus(@RequestParam("ids") List<Long> ids,
+                                            @RequestParam("publishStatus") Integer publishStatus) {
+        int count = productService.updatePublishStatus(ids, publishStatus);
+        if (count > 0) {
+            return CommonResult.success(count);
+        } else {
+            return CommonResult.failed();
+        }
+    }
+
+    @PostMapping("/update/newStatus")
+    public CommonResult updateNewStatus(@RequestParam("ids") List<Long> ids,
+                                        @RequestParam("newStatus") Integer newStatus) {
+        int count = productService.updateNewStatus(ids, newStatus);
+        if (count > 0) {
+            return CommonResult.success(count);
+        } else {
+            return CommonResult.failed();
+        }
+    }
+
+    @PostMapping("/update/recommendStatus")
+    public CommonResult updateRecommendStatus(@RequestParam("ids") List<Long> ids,
+                                              @RequestParam("recommendStatus") Integer recommendStatus) {
+        int count = productService.updateRecommendStatus(ids, recommendStatus);
+        if(count>0){
+            return CommonResult.success(count);
+        }else{
+            return CommonResult.failed();
+        }
     }
 
 

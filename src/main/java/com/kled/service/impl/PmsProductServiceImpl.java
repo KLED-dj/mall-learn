@@ -42,4 +42,31 @@ public class PmsProductServiceImpl implements PmsProductService {
         }
         return productMapper.selectByExample(productExample);
     }
+
+    @Override
+    public int updatePublishStatus(List<Long> ids, Integer publishStatus) {
+        PmsProduct record = new PmsProduct();
+        record.setPublishStatus(publishStatus);
+        PmsProductExample example = new PmsProductExample();
+        example.createCriteria().andIdIn(ids);
+        return productMapper.updateByExampleSelective(record,example);
+    }
+
+    @Override
+    public int updateNewStatus(List<Long> ids, Integer newStatus) {
+        PmsProduct record = new PmsProduct();
+        record.setNewStatus(newStatus);
+        PmsProductExample example = new PmsProductExample();
+        example.createCriteria().andIdIn(ids);
+        return productMapper.updateByExampleSelective(record,example);
+    }
+
+    @Override
+    public int updateRecommendStatus(List<Long> ids, Integer recommendStatus) {
+        PmsProduct record = new PmsProduct();
+        record.setRecommandStatus(recommendStatus);
+        PmsProductExample example = new PmsProductExample();
+        example.createCriteria().andIdIn(ids);
+        return productMapper.updateByExampleSelective(record,example);
+    }
 }
