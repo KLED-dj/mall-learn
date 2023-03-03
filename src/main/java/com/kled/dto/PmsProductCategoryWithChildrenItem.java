@@ -7,6 +7,9 @@ import lombok.Setter;
 
 import java.util.List;
 
+/**
+ * 包含子级分类的商品分类
+ */
 public class PmsProductCategoryWithChildrenItem extends PmsProductCategory {
     @Getter
     @Setter

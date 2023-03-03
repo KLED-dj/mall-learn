@@ -1,16 +1,14 @@
 package com.kled.service.impl;
 
 import com.kled.mbg.mapper.UmsMemberLevelMapper;
-import com.kled.mbg.model.UmsMemberExample;
 import com.kled.mbg.model.UmsMemberLevel;
 import com.kled.mbg.model.UmsMemberLevelExample;
 import com.kled.service.UmsMemberLevelService;
-import com.kled.service.UmsMemberService;
-import net.bytebuddy.asm.Advice;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
-
+@Service
 public class UmsMemberLevelServiceImpl implements UmsMemberLevelService {
     @Autowired
     private UmsMemberLevelMapper memberLevelMapper;

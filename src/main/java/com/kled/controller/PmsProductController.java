@@ -2,15 +2,14 @@ package com.kled.controller;
 
 import com.kled.common.api.CommonPage;
 import com.kled.common.api.CommonResult;
+import com.kled.dto.PmsProductParam;
 import com.kled.dto.PmsProductQueryParam;
 import com.kled.mbg.model.PmsProduct;
-import com.kled.service.impl.PmsProductServiceImpl;
+import com.kled.service.PmsProductService;
 import io.swagger.annotations.Api;
 
 import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -25,7 +24,19 @@ import java.util.List;
 @Api(tags = "PmsProductController", description = "商品管理")
 public class PmsProductController {
     @Autowired
-    private PmsProductServiceImpl productService;
+    private PmsProductService productService;
+
+    @ApiOperation("创建商品")
+    @PostMapping("/create")
+    public CommonResult create(@RequestBody PmsProductParam productParam){
+        int count = productService.create(productParam);
+        if(count>0){
+            return CommonResult.success(count);
+        }else{
+            return CommonResult.failed();
+        }
+    }
+
 
     @GetMapping("/list")
     @ApiOperation("查询商品")

@@ -1,13 +1,20 @@
 package com.kled.service;
 
+import com.kled.dto.PmsProductParam;
 import com.kled.dto.PmsProductQueryParam;
 import com.kled.mbg.model.PmsProduct;
 
 import java.util.List;
 
 public interface PmsProductService {
-    
-
+    /**
+     * 新增
+     * @TODO 新增商品
+     */
+    int create(PmsProductParam productParam);
+    /**
+     * 分页查询
+     */
     List<PmsProduct> list(PmsProductQueryParam pmsProductQueryParam, Integer pageSize, Integer pageNum);
 
     /**
