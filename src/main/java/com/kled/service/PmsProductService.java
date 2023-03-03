@@ -17,6 +17,13 @@ public interface PmsProductService {
      */
     @Transactional(isolation = Isolation.DEFAULT,propagation = Propagation.REQUIRED)
     int create(PmsProductParam productParam);
+
+    /**
+     * 更新商品
+     */
+    @Transactional
+    int update(Long id, PmsProductParam productParam);
+
     /**
      * 分页查询
      */
