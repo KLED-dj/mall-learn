@@ -46,5 +46,9 @@ public interface PmsProductService {
      * 根据商品编号获取更新信息
      */
     PmsProductResult getUpdateInfo(Long id);
+    /**
+     * 批量修改删除状态
+     */
+    int updateDeleteStatus(List<Long> ids,Integer deleteStatus);
 
 }

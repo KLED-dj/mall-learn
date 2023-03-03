@@ -70,7 +70,7 @@ public class PmsProductController {
             return CommonResult.failed();
         }
     }
-
+    @ApiOperation("批量设为新品")
     @PostMapping("/update/newStatus")
     public CommonResult updateNewStatus(@RequestParam("ids") List<Long> ids,
                                         @RequestParam("newStatus") Integer newStatus) {
@@ -82,6 +82,7 @@ public class PmsProductController {
         }
     }
 
+    @ApiOperation("批量推荐商品")
     @PostMapping("/update/recommendStatus")
     public CommonResult updateRecommendStatus(@RequestParam("ids") List<Long> ids,
                                               @RequestParam("recommendStatus") Integer recommendStatus) {
@@ -100,5 +101,15 @@ public class PmsProductController {
         return CommonResult.success(productResult);
     }
 
-
+    @ApiOperation("批量修改删除状态")
+    @PostMapping("/update/deleteStatus")
+    public CommonResult updateDeleteStatus(@RequestParam("ids") List<Long> ids,
+                                           @RequestParam("deleteStatus")Integer deleteStatus){
+        int count = productService.updateDeleteStatus(ids, deleteStatus);
+        if(count>0){
+            return CommonResult.success(count);
+        }else{
+            return CommonResult.failed();
+        }
+    }
 }

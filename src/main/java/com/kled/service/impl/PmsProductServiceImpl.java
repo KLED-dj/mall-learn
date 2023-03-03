@@ -248,6 +248,15 @@ public class PmsProductServiceImpl implements PmsProductService {
         return productDao.getUpdateInfo(id);
     }
 
+    @Override
+    public int updateDeleteStatus(List<Long> ids, Integer deleteStatus) {
+        PmsProduct record = new PmsProduct();
+        record.setDeleteStatus(deleteStatus);
+        PmsProductExample example = new PmsProductExample();
+        example.createCriteria().andIdIn(ids);
+        return productMapper.updateByExampleSelective(record,example);
+    }
+
     /**
      * 建立和插入关系表操作
      * @param dao           可操作的DAO
