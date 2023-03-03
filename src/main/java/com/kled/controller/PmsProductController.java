@@ -4,6 +4,7 @@ import com.kled.common.api.CommonPage;
 import com.kled.common.api.CommonResult;
 import com.kled.dto.PmsProductParam;
 import com.kled.dto.PmsProductQueryParam;
+import com.kled.dto.PmsProductResult;
 import com.kled.mbg.model.PmsProduct;
 import com.kled.service.PmsProductService;
 import io.swagger.annotations.Api;
@@ -79,6 +80,13 @@ public class PmsProductController {
         }else{
             return CommonResult.failed();
         }
+    }
+
+    @ApiOperation("根据商品id获取商品编辑信息")
+    @GetMapping("/updateInfo/{id}")
+    public CommonResult<PmsProductResult> getUpdateInfo(@PathVariable Long id){
+        PmsProductResult productResult = productService.getUpdateInfo(id);
+        return CommonResult.success(productResult);
     }
 
 

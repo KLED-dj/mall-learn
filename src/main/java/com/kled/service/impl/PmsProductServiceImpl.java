@@ -5,6 +5,7 @@ import com.github.pagehelper.PageHelper;
 import com.kled.dao.*;
 import com.kled.dto.PmsProductParam;
 import com.kled.dto.PmsProductQueryParam;
+import com.kled.dto.PmsProductResult;
 import com.kled.mbg.mapper.PmsProductMapper;
 import com.kled.mbg.model.PmsProduct;
 import com.kled.mbg.model.PmsProductExample;
@@ -37,6 +38,8 @@ public class PmsProductServiceImpl implements PmsProductService {
     private CmsSubjectProductRelationDao subjectProductRelationDao;
     @Autowired
     private CmsPrefrenceAreaProductRelationDao prefrenceAreaProductRelationDao;
+    @Autowired
+    private PmsProductDao productDao;
 
     @Override
     public int create(PmsProductParam productParam) {
@@ -136,6 +139,11 @@ public class PmsProductServiceImpl implements PmsProductService {
         PmsProductExample example = new PmsProductExample();
         example.createCriteria().andIdIn(ids);
         return productMapper.updateByExampleSelective(record,example);
+    }
+
+    @Override
+    public PmsProductResult getUpdateInfo(Long id) {
+        return productDao.getUpdateInfo(id);
     }
 
     /**
