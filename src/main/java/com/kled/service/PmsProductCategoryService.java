@@ -15,4 +15,14 @@ public interface PmsProductCategoryService {
      * 以层级形式获取商品分类
      */
     List<PmsProductCategoryWithChildrenItem> listWithChildren();
+
+    /**
+     * 批量更新菜单状态
+     */
+    int updateNavStatus(List<Long> ids,Integer navStatus);
+
+    /**
+     * 批量更新展示状态
+     */
+    int updateShowStatus(List<Long> ids,Integer ShowStatus);
 }

@@ -33,5 +33,27 @@ public class PmsProductCategoryController {
         return CommonResult.success(list);
     }
 
-    
+    @PostMapping("/update/navStatus")
+    @ApiOperation("修改导肮显示状态")
+    public CommonResult updateNavStatus(@RequestParam("ids")List<Long> ids,@RequestParam("navStatus") Integer navStatus){
+        int count = productCategoryService.updateNavStatus(ids, navStatus);
+        if(count>0){
+            return CommonResult.success(count);
+        }else{
+            return CommonResult.failed();
+        }
+    }
+
+    @PostMapping("/update/showStatus")
+    @ApiOperation("修改显示状态")
+    public CommonResult updateShowStatus(@RequestParam("ids")List<Long> ids,@RequestParam("showStatus")Integer showStatus){
+        int count = productCategoryService.updateShowStatus(ids, showStatus);
+        if(count>0){
+            return CommonResult.success(count);
+        }else{
+            return CommonResult.failed();
+        }
+    }
 }
+
+

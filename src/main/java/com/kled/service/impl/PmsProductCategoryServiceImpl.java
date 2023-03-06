@@ -33,4 +33,22 @@ public class PmsProductCategoryServiceImpl implements PmsProductCategoryService 
     public List<PmsProductCategoryWithChildrenItem> listWithChildren() {
         return productCategoryDao.listWithChildren();
     }
+
+    @Override
+    public int updateNavStatus(List<Long> ids, Integer navStatus) {
+        PmsProductCategory productCategory = new PmsProductCategory();
+        productCategory.setNavStatus(navStatus);
+        PmsProductCategoryExample example = new PmsProductCategoryExample();
+        example.createCriteria().andIdIn(ids);
+        return productCategoryMapper.updateByExampleSelective(productCategory,example);
+    }
+
+    @Override
+    public int updateShowStatus(List<Long> ids, Integer showStatus) {
+        PmsProductCategory productCategory = new PmsProductCategory();
+        productCategory.setShowStatus(showStatus);
+        PmsProductCategoryExample example = new PmsProductCategoryExample();
+        example.createCriteria().andIdIn(ids);
+        return productCategoryMapper.updateByExampleSelective(productCategory,example);
+    }
 }
