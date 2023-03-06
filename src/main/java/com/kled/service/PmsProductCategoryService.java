@@ -1,7 +1,9 @@
 package com.kled.service;
 
+import com.kled.dto.PmsProductCategoryParam;
 import com.kled.dto.PmsProductCategoryWithChildrenItem;
 import com.kled.mbg.model.PmsProductCategory;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -19,6 +21,11 @@ public interface PmsProductCategoryService {
      * 根据ID获取商品分类
      */
     PmsProductCategory getItem(Long id);
+    /**
+     * 修改商品分类
+     */
+    @Transactional
+    int update(Long id, PmsProductCategoryParam productCategoryParam);
 
     /**
      * 批量更新菜单状态

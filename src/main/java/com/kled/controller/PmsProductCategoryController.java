@@ -2,11 +2,14 @@ package com.kled.controller;
 
 import com.kled.common.api.CommonPage;
 import com.kled.common.api.CommonResult;
+import com.kled.dto.PmsProductCategoryParam;
 import com.kled.dto.PmsProductCategoryWithChildrenItem;
 import com.kled.mbg.model.PmsProductCategory;
 import com.kled.service.PmsProductCategoryService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.parameters.P;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -30,6 +33,19 @@ public class PmsProductCategoryController {
     public CommonResult<PmsProductCategory> getItem(@PathVariable Long id){
         PmsProductCategory productCategory = productCategoryService.getItem(id);
         return CommonResult.success(productCategory);
+    }
+
+    @ApiOperation("修改商品分类")
+    @PostMapping("/update/{id}")
+    public CommonResult update(@PathVariable Long id,
+                               @Validated
+                               @RequestBody PmsProductCategoryParam productCategoryParam){
+        int count = productCategoryService.update(id, productCategoryParam);
+        if(count>0){
+            return CommonResult.success(count);
+        }else {
+            return CommonResult.failed();
+        }
     }
 
 
