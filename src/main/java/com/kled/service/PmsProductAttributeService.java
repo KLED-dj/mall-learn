@@ -1,5 +1,6 @@
 package com.kled.service;
 
+import com.kled.dto.ProductAttrInfo;
 import com.kled.mbg.model.PmsProductAttribute;
 
 import java.util.List;
@@ -12,5 +13,8 @@ public interface PmsProductAttributeService {
      * 根据分类分页获取商品属性
      */
     List<PmsProductAttribute> getList(Long cid,Integer type,Integer pageSize,Integer pageNum);
-
+    /**
+     * 获取商品分类对应属性列表
+     */
+    List<ProductAttrInfo> getProductAttributeInfo(Long productCategoryId);
 }

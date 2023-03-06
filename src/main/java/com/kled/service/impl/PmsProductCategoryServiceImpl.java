@@ -35,6 +35,11 @@ public class PmsProductCategoryServiceImpl implements PmsProductCategoryService 
     }
 
     @Override
+    public PmsProductCategory getItem(Long id) {
+        return productCategoryMapper.selectByPrimaryKey(id);
+    }
+
+    @Override
     public int updateNavStatus(List<Long> ids, Integer navStatus) {
         PmsProductCategory productCategory = new PmsProductCategory();
         productCategory.setNavStatus(navStatus);

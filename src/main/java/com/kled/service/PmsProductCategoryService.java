@@ -15,6 +15,10 @@ public interface PmsProductCategoryService {
      * 以层级形式获取商品分类
      */
     List<PmsProductCategoryWithChildrenItem> listWithChildren();
+    /**
+     * 根据ID获取商品分类
+     */
+    PmsProductCategory getItem(Long id);
 
     /**
      * 批量更新菜单状态

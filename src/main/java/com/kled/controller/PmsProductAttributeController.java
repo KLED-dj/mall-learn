@@ -2,12 +2,14 @@ package com.kled.controller;
 
 import com.kled.common.api.CommonPage;
 import com.kled.common.api.CommonResult;
+import com.kled.dto.ProductAttrInfo;
 import com.kled.mbg.model.PmsProductAttribute;
 import com.kled.service.PmsProductAttributeService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,5 +31,12 @@ public class PmsProductAttributeController {
                                                                  @RequestParam(value = "pageNum",defaultValue = "1")Integer pageNum){
         List<PmsProductAttribute> productAttributeList = productAttributeService.getList(cid, type, pageSize, pageNum);
         return CommonResult.success(CommonPage.restPage(productAttributeList));
+    }
+
+    @ApiOperation("根据商品分类的id获取商品属性及属性分类")
+    @GetMapping("/attrInfo/{productCategoryId}")
+    public CommonResult<List<ProductAttrInfo>> getAttrInfo(@PathVariable Long productCategoryId){
+        List<ProductAttrInfo> productAttrInfoList = productAttributeService.getProductAttributeInfo(productCategoryId);
+        return CommonResult.success(productAttrInfoList);
     }
 }

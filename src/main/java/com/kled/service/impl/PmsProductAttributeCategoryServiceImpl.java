@@ -2,6 +2,7 @@ package com.kled.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.kled.dao.PmsProductAttributeCategoryDao;
+import com.kled.dto.PmsProductAttributeCategoryItem;
 import com.kled.mbg.mapper.PmsProductAttributeCategoryMapper;
 import com.kled.mbg.model.PmsProductAttributeCategory;
 import com.kled.mbg.model.PmsProductAttributeCategoryExample;
@@ -20,5 +21,10 @@ public class PmsProductAttributeCategoryServiceImpl implements PmsProductAttribu
     public List<PmsProductAttributeCategory> getList(Integer pageSize, Integer pageNum) {
         PageHelper.startPage(pageNum,pageSize);
         return productAttributeCategoryMapper.selectByExample(new PmsProductAttributeCategoryExample());
+    }
+
+    @Override
+    public List<PmsProductAttributeCategoryItem> getListWithAttr() {
+        return productAttributeCategoryDao.getListWithAttr();
     }
 }

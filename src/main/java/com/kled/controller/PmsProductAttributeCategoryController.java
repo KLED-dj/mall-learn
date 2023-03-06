@@ -2,8 +2,10 @@ package com.kled.controller;
 
 import com.kled.common.api.CommonPage;
 import com.kled.common.api.CommonResult;
+import com.kled.dto.PmsProductAttributeCategoryItem;
 import com.kled.mbg.model.PmsProductAttributeCategory;
 import com.kled.service.impl.PmsProductAttributeCategoryServiceImpl;
+import com.kled.service.impl.PmsProductAttributeServiceImpl;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,5 +33,13 @@ public class PmsProductAttributeCategoryController {
         List<PmsProductAttributeCategory> productAttributeCategories = productAttributeCategoryService.getList(pageSize, pageNum);
         return CommonResult.success(CommonPage.restPage(productAttributeCategories));
     }
+
+    @ApiOperation("获取所有商品属性分类及其下属性")
+    @GetMapping("/list/withAttr")
+    public CommonResult<List<PmsProductAttributeCategoryItem>> getListWithAttr(){
+        List<PmsProductAttributeCategoryItem> productAttributeCategoryItemList = productAttributeCategoryService.getListWithAttr();
+        return CommonResult.success(productAttributeCategoryItemList);
+    }
+
 
 }

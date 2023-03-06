@@ -25,6 +25,13 @@ public class PmsProductCategoryController {
         return CommonResult.success(CommonPage.restPage(productCategoryList));
     }
 
+    @GetMapping("/{id}")
+    @ApiOperation("根据id获取商品分类")
+    public CommonResult<PmsProductCategory> getItem(@PathVariable Long id){
+        PmsProductCategory productCategory = productCategoryService.getItem(id);
+        return CommonResult.success(productCategory);
+    }
+
 
     @ApiOperation("查询所有一级分类及子分类")
     @GetMapping("/list/withChildren")
