@@ -34,6 +34,22 @@ public class PmsProductCategoryServiceImpl implements PmsProductCategoryService 
 
 
     @Override
+    public int create(PmsProductCategoryParam pmsProductCategoryParam) {
+        PmsProductCategory productCategory = new PmsProductCategory();
+        productCategory.setProductCount(0);
+        BeanUtils.copyProperties(pmsProductCategoryParam,productCategory);
+        //没有父分类时为一级分类
+        setCategoryLevel(productCategory);
+        int count = productCategoryMapper.insertSelective(productCategory);
+        //创建筛选属性关联
+        List<Long> productAttributeIdList = pmsProductCategoryParam.getProductAttributeIdList();
+        if(!CollectionUtils.isEmpty(productAttributeIdList)){
+            insertRelationList(productCategory.getId(),productAttributeIdList);
+        }
+        return count;
+    }
+
+    @Override
     public List<PmsProductCategory> getList(Long parentId, Integer pageSize, Integer pageNum) {
         PageHelper.startPage(pageNum, pageSize);
         PmsProductCategoryExample productCategoryExample = new PmsProductCategoryExample();

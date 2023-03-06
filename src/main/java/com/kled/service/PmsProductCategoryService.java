@@ -9,6 +9,12 @@ import java.util.List;
 
 public interface PmsProductCategoryService {
     /**
+     * 创建商品分类
+     */
+    @Transactional
+    int create(PmsProductCategoryParam pmsProductCategoryParam);
+
+    /**
      * 分类获取商品分类
      */
     List<PmsProductCategory> getList(Long parentId,Integer pageSize,Integer pageNum);
