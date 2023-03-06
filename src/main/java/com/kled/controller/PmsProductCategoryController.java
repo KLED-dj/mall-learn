@@ -90,6 +90,17 @@ public class PmsProductCategoryController {
             return CommonResult.failed();
         }
     }
+
+    @PostMapping("/delete/{id}")
+    @ApiOperation("根据id删除")
+    public CommonResult delete(@PathVariable Long id) {
+        int count = productCategoryService.delete(id);
+        if (count > 0) {
+            return CommonResult.success(count);
+        } else {
+            return CommonResult.failed();
+        }
+    }
 }
 
 

@@ -42,4 +42,8 @@ public interface PmsProductCategoryService {
      * 批量更新展示状态
      */
     int updateShowStatus(List<Long> ids,Integer ShowStatus);
+    /**
+     * 批量更改删除状态
+     */
+    int delete(Long id);
 }

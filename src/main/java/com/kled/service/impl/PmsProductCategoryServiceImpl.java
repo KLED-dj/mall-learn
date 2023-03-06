@@ -112,6 +112,11 @@ public class PmsProductCategoryServiceImpl implements PmsProductCategoryService 
         return productCategoryMapper.updateByExampleSelective(productCategory, example);
     }
 
+    @Override
+    public int delete(Long id) {
+        return productCategoryMapper.deleteByPrimaryKey(id);
+    }
+
     /**
      * 批量插入商品分类与筛选属性关系表
      */
