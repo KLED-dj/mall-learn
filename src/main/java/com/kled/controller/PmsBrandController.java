@@ -22,7 +22,7 @@ import java.util.List;
  * Created by macro on 2019/4/19.
  */
 @Api(tags = "PmsBrandController", description = "商品品牌管理")
-@Controller
+@RestController
 @RequestMapping("/brand")
 public class PmsBrandController {
     @Autowired
@@ -99,5 +99,27 @@ public class PmsBrandController {
     @ResponseBody
     public CommonResult<PmsBrand> brand(@PathVariable("id") Long id) {
         return CommonResult.success(brandService.getBrand(id));
+    }
+
+    @ApiOperation("批量更新厂家制造商状态")
+    @PostMapping("/update/factoryStatus")
+    public CommonResult updateFactoryStatus(@RequestParam("ids") List<Long> ids, @RequestParam("factoryStatus") Integer factoryStatus) {
+        int count = brandService.updateFactoryStatus(ids, factoryStatus);
+        if (count > 0) {
+            return CommonResult.success(count);
+        } else {
+            return CommonResult.failed();
+        }
+    }
+
+    @ApiOperation("批量更新显示状态")
+    @PostMapping("/update/showStatus")
+    public CommonResult updateShowStatus(@RequestParam("ids") List<Long> ids, @RequestParam("showStatus") Integer showStatus) {
+        int count = brandService.updateShowStatus(ids, showStatus);
+        if (count > 0) {
+            return CommonResult.success(count);
+        } else {
+            return CommonResult.failed();
+        }
     }
 }
