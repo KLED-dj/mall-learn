@@ -1,0 +1,19 @@
+package com.kled.dto;
+
+import io.swagger.annotations.ApiModelProperty;
+import lombok.Getter;
+import lombok.Setter;
+
+/**
+ * 订单发货参数
+ */
+@Getter
+@Setter
+public class OmsOrderDeliverParam {
+    @ApiModelProperty("订单id")
+    private Long orderId;
+    @ApiModelProperty("物流公司")
+    private String deliverCompany;
+    @ApiModelProperty("物流单号")
+    private String deliverSn;
+}
