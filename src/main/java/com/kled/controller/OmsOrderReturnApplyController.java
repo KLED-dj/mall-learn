@@ -48,4 +48,15 @@ public class OmsOrderReturnApplyController {
         }
         return CommonResult.failed();
     }
+
+    @ApiOperation("批量删除")
+    @PostMapping("/delete")
+    public CommonResult delete(@RequestParam("ids") List<Long> ids){
+        int count = returnApplyService.delete(ids);
+        if (count>0){
+            return CommonResult.success(count);
+        }
+        return CommonResult.failed();
+    }
+
 }

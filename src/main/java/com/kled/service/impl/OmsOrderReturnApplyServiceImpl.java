@@ -6,6 +6,7 @@ import com.kled.dto.OmsReturnApplyQueryParam;
 import com.kled.dto.OmsUpdateStatusParam;
 import com.kled.mbg.mapper.OmsOrderReturnApplyMapper;
 import com.kled.mbg.model.OmsOrderReturnApply;
+import com.kled.mbg.model.OmsOrderReturnApplyExample;
 import com.kled.service.OmsOrderReturnApplyService;
 import io.swagger.annotations.ApiModelProperty;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,5 +64,12 @@ public class OmsOrderReturnApplyServiceImpl implements OmsOrderReturnApplyServic
             return 0;
         }
         return returnApplyMapper.updateByPrimaryKeySelective(returnApply);
+    }
+
+    @Override
+    public int delete(List<Long> ids) {
+        OmsOrderReturnApplyExample example = new OmsOrderReturnApplyExample();
+        example.createCriteria().andIdIn(ids).andStatusEqualTo(3);
+        return returnApplyMapper.deleteByExample(example);
     }
 }

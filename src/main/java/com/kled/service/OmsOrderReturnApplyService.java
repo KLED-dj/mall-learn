@@ -22,4 +22,8 @@ public interface OmsOrderReturnApplyService {
      * 修改指定申请状态
      */
     int updateStatus(Long id, OmsUpdateStatusParam statusParam);
+    /**
+     * 批量删除
+     */
+    int delete(List<Long> ids);
 }
