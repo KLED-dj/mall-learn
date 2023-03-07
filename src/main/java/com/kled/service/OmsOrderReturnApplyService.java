@@ -1,6 +1,7 @@
 package com.kled.service;
 
 import com.kled.dto.OmsReturnApplyQueryParam;
+import com.kled.dto.OmsUpdateStatusParam;
 import com.kled.mbg.model.OmsOrderReturnApply;
 
 import java.util.List;
@@ -17,4 +18,8 @@ public interface OmsOrderReturnApplyService {
      * 获取指定申请详情
      */
     OmsOrderReturnApply getItem(Long id);
+    /**
+     * 修改指定申请状态
+     */
+    int updateStatus(Long id, OmsUpdateStatusParam statusParam);
 }

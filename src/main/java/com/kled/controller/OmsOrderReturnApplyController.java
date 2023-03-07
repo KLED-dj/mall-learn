@@ -3,6 +3,7 @@ package com.kled.controller;
 import com.kled.common.api.CommonPage;
 import com.kled.common.api.CommonResult;
 import com.kled.dto.OmsReturnApplyQueryParam;
+import com.kled.dto.OmsUpdateStatusParam;
 import com.kled.mbg.model.OmsOrderReturnApply;
 import com.kled.service.OmsOrderReturnApplyService;
 import io.swagger.annotations.Api;
@@ -35,5 +36,16 @@ public class OmsOrderReturnApplyController {
     public CommonResult getItem(@PathVariable Long id){
         OmsOrderReturnApply result = returnApplyService.getItem(id);
         return CommonResult.success(result);
+    }
+
+    @ApiOperation("修改退货申请状态")
+    @PostMapping("/update/status/{id}")
+    public CommonResult updateStatus(@PathVariable Long id,
+                                     @RequestBody OmsUpdateStatusParam statusParam){
+        int count = returnApplyService.updateStatus(id, statusParam);
+        if (count>0){
+            return CommonResult.success(count);
+        }
+        return CommonResult.failed();
     }
 }
