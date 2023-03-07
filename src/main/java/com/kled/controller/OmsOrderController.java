@@ -2,12 +2,11 @@ package com.kled.controller;
 
 import com.kled.common.api.CommonPage;
 import com.kled.common.api.CommonResult;
-import com.kled.dto.OmsOrderDeliverParam;
-import com.kled.dto.OmsOrderDetail;
-import com.kled.dto.OmsOrderQueryParam;
+import com.kled.dto.*;
 import com.kled.mbg.model.OmsOrder;
 import com.kled.service.OmsOrderService;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiModelProperty;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -59,6 +58,16 @@ public class OmsOrderController {
         return CommonResult.success(detail);
     }
 
+    @ApiOperation("批量关闭订单")
+    @PostMapping("/update/close")
+    public CommonResult close(@RequestParam("ids") List<Long> ids,@RequestParam String note){
+        int count = orderService.close(ids, note);
+        if(count>0){
+            return CommonResult.success(count);
+        }
+        return CommonResult.failed();
+    }
+
     @ApiOperation("修改备注订单")
     @PostMapping("/update/note")
     public CommonResult updateNote(@RequestParam("id") Long id,
@@ -71,5 +80,24 @@ public class OmsOrderController {
         return CommonResult.failed();
     }
 
+    @ApiOperation("修改收货人信息")
+    @PostMapping("/update/receiverInfo")
+    public CommonResult updateReceiverInfo(@RequestBody OmsReceiverInfoParam receiverInfoParam){
+        int count = orderService.updateReceiverInfo(receiverInfoParam);
+        if(count>0){
+            return CommonResult.success(count);
+        }
+        return CommonResult.failed();
+    }
+
+    @ApiOperation("修改商品价格信息")
+    @PostMapping("/update/moneyInfo")
+    public CommonResult updateMoneyInfo(@RequestBody OmsMoneyInfoParam moneyInfoParam){
+        int count = orderService.updateMoneyInfo(moneyInfoParam);
+        if (count>0){
+            return CommonResult.success(count);
+        }
+        return CommonResult.failed();
+    }
 
 }
