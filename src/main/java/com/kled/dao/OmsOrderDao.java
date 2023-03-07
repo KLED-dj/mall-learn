@@ -13,11 +13,13 @@ public interface OmsOrderDao {
     /**
      * 条件查询订单
      */
-    List<OmsOrder> getList(@Param("queryParam")OmsOrderQueryParam queryParam);
+    List<OmsOrder> getList(@Param("queryParam") OmsOrderQueryParam queryParam);
+
     /**
      * 批量发货
      */
-    int delivery(@Param("list")OmsOrderDeliverParam orderDeliverParam);
+    int delivery(@Param("list") List<OmsOrderDeliverParam> orderDeliverParam);
+
     /**
      * 获取订单详情
      */
