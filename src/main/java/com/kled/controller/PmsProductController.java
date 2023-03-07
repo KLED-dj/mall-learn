@@ -8,7 +8,6 @@ import com.kled.dto.PmsProductResult;
 import com.kled.mbg.model.PmsProduct;
 import com.kled.service.PmsProductService;
 import io.swagger.annotations.Api;
-
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -29,11 +28,11 @@ public class PmsProductController {
 
     @ApiOperation("创建商品")
     @PostMapping("/create")
-    public CommonResult create(@RequestBody PmsProductParam productParam){
+    public CommonResult create(@RequestBody PmsProductParam productParam) {
         int count = productService.create(productParam);
-        if(count>0){
+        if (count > 0) {
             return CommonResult.success(count);
-        }else{
+        } else {
             return CommonResult.failed();
         }
     }
@@ -70,6 +69,7 @@ public class PmsProductController {
             return CommonResult.failed();
         }
     }
+
     @ApiOperation("批量设为新品")
     @PostMapping("/update/newStatus")
     public CommonResult updateNewStatus(@RequestParam("ids") List<Long> ids,
@@ -87,16 +87,16 @@ public class PmsProductController {
     public CommonResult updateRecommendStatus(@RequestParam("ids") List<Long> ids,
                                               @RequestParam("recommendStatus") Integer recommendStatus) {
         int count = productService.updateRecommendStatus(ids, recommendStatus);
-        if(count>0){
+        if (count > 0) {
             return CommonResult.success(count);
-        }else{
+        } else {
             return CommonResult.failed();
         }
     }
 
     @ApiOperation("根据商品id获取商品编辑信息")
     @GetMapping("/updateInfo/{id}")
-    public CommonResult<PmsProductResult> getUpdateInfo(@PathVariable Long id){
+    public CommonResult<PmsProductResult> getUpdateInfo(@PathVariable Long id) {
         PmsProductResult productResult = productService.getUpdateInfo(id);
         return CommonResult.success(productResult);
     }
@@ -104,11 +104,11 @@ public class PmsProductController {
     @ApiOperation("批量修改删除状态")
     @PostMapping("/update/deleteStatus")
     public CommonResult updateDeleteStatus(@RequestParam("ids") List<Long> ids,
-                                           @RequestParam("deleteStatus")Integer deleteStatus){
+                                           @RequestParam("deleteStatus") Integer deleteStatus) {
         int count = productService.updateDeleteStatus(ids, deleteStatus);
-        if(count>0){
+        if (count > 0) {
             return CommonResult.success(count);
-        }else{
+        } else {
             return CommonResult.failed();
         }
     }

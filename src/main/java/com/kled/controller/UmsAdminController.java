@@ -63,46 +63,45 @@ public class UmsAdminController {
             return CommonResult.validateFailed("用户名或密码错误");
         }
         HashMap<String, String> tokenMap = new HashMap<>();
-        tokenMap.put("token",token);
-        tokenMap.put("tokenHead",tokenHead);
+        tokenMap.put("token", token);
+        tokenMap.put("tokenHead", tokenHead);
         return CommonResult.success(tokenMap);
     }
 
     @ApiOperation("获取用户所有权限")
     @GetMapping("/permission/{adminId}")
-    public CommonResult<List<UmsPermission>> getPermissionList(@PathVariable Long adminId){
+    public CommonResult<List<UmsPermission>> getPermissionList(@PathVariable Long adminId) {
         List<UmsPermission> permissionList = adminService.getPermissionList(adminId);
         return CommonResult.success(permissionList);
     }
 
     /**
-     *
      * @param principal 该接口表示主体的抽象概念，可用于表示任何实体，如个人、公司和登录id
      * @return
      */
     @ApiOperation(value = "获取当前登录用户信息")
     @GetMapping("/info")
-    public CommonResult getAdminInfo(Principal principal){
-        if(principal==null){
+    public CommonResult getAdminInfo(Principal principal) {
+        if (principal == null) {
             return CommonResult.unauthorized(null);
         }
         String username = principal.getName();
         UmsAdmin umsAdmin = adminService.getAdminByUsername(username);
         HashMap<String, Object> data = new HashMap<>();
-        data.put("username",umsAdmin.getUsername());
-        data.put("menus",roleService.getMenuList(umsAdmin.getId()));
-        data.put("icon",umsAdmin.getIcon());
+        data.put("username", umsAdmin.getUsername());
+        data.put("menus", roleService.getMenuList(umsAdmin.getId()));
+        data.put("icon", umsAdmin.getIcon());
         List<UmsRole> roleList = adminService.getRoleList(umsAdmin.getId());
-        if(CollUtil.isNotEmpty(roleList)){
+        if (CollUtil.isNotEmpty(roleList)) {
             List<String> roles = roleList.stream().map(UmsRole::getName).collect(Collectors.toList());
-            data.put("roles",roles);
+            data.put("roles", roles);
         }
         return CommonResult.success(data);
     }
 
     @ApiOperation(value = "登出功能")
     @PostMapping("/logout")
-    public CommonResult logout(){
+    public CommonResult logout() {
         return CommonResult.success(null);
     }
 }

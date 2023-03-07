@@ -15,7 +15,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/sku")
-@Api(tags = "PmsSkuStockController",description = "sku商品库存管理")
+@Api(tags = "PmsSkuStockController", description = "sku商品库存管理")
 public class PmsSkuStockController {
     @Autowired
     private PmsSkuStockService skuStockService;
@@ -23,18 +23,18 @@ public class PmsSkuStockController {
     @GetMapping("/{pid}")
     @ApiOperation("根据商品ID及sku编码模糊搜索sku库存")
     public CommonResult<List<PmsSkuStock>> getList(@PathVariable Long pid,
-                                                   @RequestParam(value = "keyword",required = false) String keyword){
+                                                   @RequestParam(value = "keyword", required = false) String keyword) {
         List<PmsSkuStock> skuStockList = skuStockService.getList(pid, keyword);
         return CommonResult.success(skuStockList);
     }
 
     @PostMapping("/update/{pid}")
     @ApiOperation("批量更新sku库存信息")
-    public CommonResult update(@PathVariable Long pid,@RequestBody List<PmsSkuStock> skuStockList){
+    public CommonResult update(@PathVariable Long pid, @RequestBody List<PmsSkuStock> skuStockList) {
         int count = skuStockService.update(pid, skuStockList);
-        if(count>0){
+        if (count > 0) {
             return CommonResult.success(count);
-        }else{
+        } else {
             return CommonResult.failed();
         }
     }

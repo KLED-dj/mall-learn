@@ -6,7 +6,6 @@ import com.kled.dto.*;
 import com.kled.mbg.model.OmsOrder;
 import com.kled.service.OmsOrderService;
 import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiModelProperty;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

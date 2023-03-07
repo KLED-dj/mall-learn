@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@Api(tags = "UmsMemberLevelController",description = "会员等级管理")
+@Api(tags = "UmsMemberLevelController", description = "会员等级管理")
 @RequestMapping("/memberLevel")
 public class UmsMemberLevelController {
     @Autowired
@@ -22,7 +22,7 @@ public class UmsMemberLevelController {
 
     @GetMapping("/list")
     @ApiOperation("查询所有会员等级")
-    public CommonResult<List<UmsMemberLevel>> list(@RequestParam("defaultStatus") Integer defaultStatus){
+    public CommonResult<List<UmsMemberLevel>> list(@RequestParam("defaultStatus") Integer defaultStatus) {
         List<UmsMemberLevel> memberLevelList = memberLevelService.list(defaultStatus);
         return CommonResult.success(memberLevelList);
     }
