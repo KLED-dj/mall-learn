@@ -37,4 +37,36 @@ public class SmsHomeBrandController {
         List<SmsHomeBrand> homeBrandList = homeBrandService.list(brandName, recommendStatus, pageSize, pageNum);
         return CommonResult.success(CommonPage.restPage(homeBrandList));
     }
+
+    @ApiOperation("按id修改首页品牌推荐状态")
+    @PostMapping("/update/recommendStatus")
+    public CommonResult updateRecommendStatus(@RequestParam List<Long> ids,
+                                              @RequestParam Integer recommendStatus) {
+        int count = homeBrandService.updateRecommendStatus(ids, recommendStatus);
+        if (count > 0) {
+            return CommonResult.success(count);
+        }
+        return CommonResult.failed();
+    }
+
+    @ApiOperation("修改品牌推荐排序")
+    @PostMapping("/update/sort/{id}")
+    public CommonResult updateSort(@PathVariable Long id, Integer sort) {
+        int count = homeBrandService.updateSort(id, sort);
+        if (count > 0) {
+            return CommonResult.success(count);
+        }
+        return CommonResult.failed();
+    }
+
+    @ApiOperation("批量删除品牌推荐")
+    @PostMapping("/delete")
+    public CommonResult delete(@RequestParam List<Long> ids) {
+        int count = homeBrandService.delete(ids);
+        if (count > 0) {
+            return CommonResult.success(count);
+        }
+        return CommonResult.failed();
+    }
+
 }

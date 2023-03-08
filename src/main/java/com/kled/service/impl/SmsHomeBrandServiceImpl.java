@@ -40,4 +40,28 @@ public class SmsHomeBrandServiceImpl implements SmsHomeBrandService {
         example.setOrderByClause("sort desc");
         return homeBrandMapper.selectByExample(example);
     }
+
+    @Override
+    public int updateRecommendStatus(List<Long> ids, Integer recommendStatus) {
+        SmsHomeBrandExample example = new SmsHomeBrandExample();
+        example.createCriteria().andIdIn(ids);
+        SmsHomeBrand homeBrand = new SmsHomeBrand();
+        homeBrand.setRecommendStatus(recommendStatus);
+        return homeBrandMapper.updateByExampleSelective(homeBrand,example);
+    }
+
+    @Override
+    public int updateSort(Long id, Integer sort) {
+        SmsHomeBrand homeBrand = new SmsHomeBrand();
+        homeBrand.setId(id);
+        homeBrand.setSort(sort);
+        return homeBrandMapper.updateByPrimaryKeySelective(homeBrand);
+    }
+
+    @Override
+    public int delete(List<Long> ids) {
+        SmsHomeBrandExample example = new SmsHomeBrandExample();
+        example.createCriteria().andIdIn(ids);
+        return homeBrandMapper.deleteByExample(example);
+    }
 }
