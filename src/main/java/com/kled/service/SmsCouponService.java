@@ -20,4 +20,12 @@ public interface SmsCouponService {
      * 根据id获取优惠券详情
      */
     SmsCouponParam getItem(Long id);
+    /**
+     * 更新优惠券信息
+     */
+    int update(Long id,SmsCouponParam couponParam);
+    /**
+     * 根据id删除优惠券
+     */
+    int delete(Long id);
 }
