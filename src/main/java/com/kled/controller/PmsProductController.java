@@ -50,6 +50,13 @@ public class PmsProductController {
         }
     }
 
+    @ApiOperation("根据商品名称或货号模糊查询")
+    @GetMapping("/simpleList")
+    public CommonResult<List<PmsProduct>> getList(String keyword){
+        List<PmsProduct> productList = productService.list(keyword);
+        return CommonResult.success(productList);
+    }
+
     @GetMapping("/list")
     @ApiOperation("查询商品")
     public CommonResult<CommonPage<PmsProduct>> getList(PmsProductQueryParam productQueryParam,

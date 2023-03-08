@@ -50,5 +50,9 @@ public interface PmsProductService {
      * 批量修改删除状态
      */
     int updateDeleteStatus(List<Long> ids,Integer deleteStatus);
+    /**
+     * 根据商品名称或者货号模糊查询
+     */
+    List<PmsProduct> list(String keyword);
 
 }

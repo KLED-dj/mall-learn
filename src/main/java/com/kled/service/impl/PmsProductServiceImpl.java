@@ -257,6 +257,18 @@ public class PmsProductServiceImpl implements PmsProductService {
         return productMapper.updateByExampleSelective(record,example);
     }
 
+    @Override
+    public List<PmsProduct> list(String keyword) {
+        PmsProductExample example = new PmsProductExample();
+        PmsProductExample.Criteria criteria = example.createCriteria();
+        criteria.andDeleteStatusEqualTo(0);
+        if(!StrUtil.isEmpty(keyword)){
+            criteria.andNameLike("%"+keyword+"%");
+            example.or().andDeleteStatusEqualTo(0).andProductSnLike(keyword);
+        }
+        return productMapper.selectByExample(example);
+    }
+
     /**
      * 建立和插入关系表操作
      * @param dao           可操作的DAO
