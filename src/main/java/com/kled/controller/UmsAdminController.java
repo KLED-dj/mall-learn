@@ -1,6 +1,7 @@
 package com.kled.controller;
 
 import cn.hutool.core.collection.CollUtil;
+import com.kled.common.api.CommonPage;
 import com.kled.common.api.CommonResult;
 import com.kled.dto.UmsAdminLoginParam;
 import com.kled.mbg.model.UmsAdmin;
@@ -104,5 +105,14 @@ public class UmsAdminController {
     @PostMapping("/logout")
     public CommonResult logout(){
         return CommonResult.success(null);
+    }
+
+    @ApiOperation("根据用户名或分页查询用户列表")
+    @GetMapping("/list")
+    public CommonResult<CommonPage<UmsAdmin>> list(@RequestParam(value = "keyword",required = false)String keyword,
+                                                   @RequestParam(value = "pageSize",defaultValue = "5")Integer pageSize,
+                                                   @RequestParam(value = "pageNum",defaultValue = "1")Integer pageNum){
+        List<UmsAdmin> adminList = adminService.list(keyword, pageSize, pageNum);
+        return CommonResult.success(CommonPage.restPage(adminList));
     }
 }

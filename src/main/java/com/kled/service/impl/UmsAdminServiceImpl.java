@@ -1,5 +1,7 @@
 package com.kled.service.impl;
 
+import cn.hutool.core.util.StrUtil;
+import com.github.pagehelper.PageHelper;
 import com.kled.common.utils.JwtTokenUtil;
 import com.kled.dao.UmsAdminRoleRelationDao;
 import com.kled.mbg.mapper.UmsAdminMapper;
@@ -101,5 +103,17 @@ public class UmsAdminServiceImpl implements UmsAdminService {
     @Override
     public List<UmsRole> getRoleList(Long adminId) {
         return adminRoleRelationDao.getRoleList(adminId);
+    }
+
+    @Override
+    public List<UmsAdmin> list(String keyword, Integer pageSize, Integer pageNum) {
+        PageHelper.startPage(pageNum,pageSize);
+        UmsAdminExample example = new UmsAdminExample();
+        UmsAdminExample.Criteria criteria = example.createCriteria();
+        if (!StrUtil.isEmpty(keyword)){
+            criteria.andUsernameLike("%"+keyword+"%");
+            example.or(example.createCriteria().andNickNameLike("%"+keyword+"%"));
+        }
+        return adminMapper.selectByExample(example);
     }
 }

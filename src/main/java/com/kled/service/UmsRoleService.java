@@ -1,6 +1,7 @@
 package com.kled.service;
 
 import com.kled.mbg.model.UmsMenu;
+import com.kled.mbg.model.UmsRole;
 
 import java.util.List;
 
@@ -11,5 +12,7 @@ public interface UmsRoleService {
     //@TODO 未完整
 
     List<UmsMenu> getMenuList(Long adminId);
+
+    List<UmsRole> list();
 
 }

@@ -37,4 +37,9 @@ public interface UmsAdminService {
      * 获取用户对应角色
      */
     List<UmsRole> getRoleList(Long adminId);
+
+    /**
+     * 根据用户名或分页查询用户
+     */
+    List<UmsAdmin> list(String keyword,Integer pageSize,Integer pageNum);
 }
