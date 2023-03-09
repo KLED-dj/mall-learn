@@ -27,4 +27,9 @@ public interface RedisService {
      */
     Long increment(String key,long delta);
 
+    /**
+     * 删除属性
+     */
+    Boolean del(String key);
+
 }

@@ -7,6 +7,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.concurrent.TimeUnit;
 
+/**
+ * redis操作
+ */
 @Service
 public class RedisServiceImpl implements RedisService {
 
@@ -36,5 +39,10 @@ public class RedisServiceImpl implements RedisService {
     @Override
     public Long increment(String key, long delta) {
         return stringRedisTemplate.opsForValue().increment(key, delta);
+    }
+
+    @Override
+    public Boolean del(String key) {
+        return stringRedisTemplate.delete(key);
     }
 }

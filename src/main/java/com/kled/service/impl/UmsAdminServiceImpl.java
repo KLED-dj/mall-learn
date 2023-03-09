@@ -5,10 +5,8 @@ import com.github.pagehelper.PageHelper;
 import com.kled.common.utils.JwtTokenUtil;
 import com.kled.dao.UmsAdminRoleRelationDao;
 import com.kled.mbg.mapper.UmsAdminMapper;
-import com.kled.mbg.model.UmsAdmin;
-import com.kled.mbg.model.UmsAdminExample;
-import com.kled.mbg.model.UmsPermission;
-import com.kled.mbg.model.UmsRole;
+import com.kled.mbg.mapper.UmsAdminRoleRelationMapper;
+import com.kled.mbg.model.*;
 import com.kled.service.UmsAdminService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,7 +21,10 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
+import org.springframework.validation.annotation.Validated;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -45,6 +46,8 @@ public class UmsAdminServiceImpl implements UmsAdminService {
     private UmsAdminMapper adminMapper;
     @Autowired
     private UmsAdminRoleRelationDao adminRoleRelationDao;
+    @Autowired
+    private UmsAdminRoleRelationMapper adminRoleRelationMapper;
 
 
     @Override
@@ -52,23 +55,23 @@ public class UmsAdminServiceImpl implements UmsAdminService {
         UmsAdminExample example = new UmsAdminExample();
         example.createCriteria().andUsernameEqualTo(username);
         List<UmsAdmin> adminList = adminMapper.selectByExample(example);
-        if (adminList != null && adminList.size() > 0){
+        if (adminList != null && adminList.size() > 0) {
             return adminList.get(0);
         }
-            return null;
+        return null;
     }
 
     @Override
     public UmsAdmin register(UmsAdmin umsAdminParam) {
         UmsAdmin umsAdmin = new UmsAdmin();
-        BeanUtils.copyProperties(umsAdminParam,umsAdmin);
+        BeanUtils.copyProperties(umsAdminParam, umsAdmin);
         umsAdmin.setCreateTime(new Date());
         umsAdmin.setStatus(1);
         //查询是否有相同的用户名的用户
         UmsAdminExample example = new UmsAdminExample();
         example.createCriteria().andUsernameEqualTo(umsAdmin.getUsername());
         List<UmsAdmin> umsAdminList = adminMapper.selectByExample(example);
-        if(umsAdminList.size()>0){
+        if (umsAdminList.size() > 0) {
             return null;
         }
         //将密码进行加密操作
@@ -81,16 +84,16 @@ public class UmsAdminServiceImpl implements UmsAdminService {
     @Override
     public String login(String username, String password) {
         String token = null;
-        try{
+        try {
             UserDetails userDetails = userDetailsService.loadUserByUsername(username);
             if (!passwordEncoder.matches(password, userDetails.getPassword())) {
                 throw new BadCredentialsException("密码不正确");
             }
-            UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails,null,userDetails.getAuthorities());
+            UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
             SecurityContextHolder.getContext().setAuthentication(authentication);
             token = jwtTokenUtil.generateToken(userDetails);
-        }catch (AuthenticationException e){
-            LOGGER.warn("登录异常:{}",e.getMessage());
+        } catch (AuthenticationException e) {
+            LOGGER.warn("登录异常:{}", e.getMessage());
         }
         return token;
     }
@@ -107,13 +110,37 @@ public class UmsAdminServiceImpl implements UmsAdminService {
 
     @Override
     public List<UmsAdmin> list(String keyword, Integer pageSize, Integer pageNum) {
-        PageHelper.startPage(pageNum,pageSize);
+        PageHelper.startPage(pageNum, pageSize);
         UmsAdminExample example = new UmsAdminExample();
         UmsAdminExample.Criteria criteria = example.createCriteria();
-        if (!StrUtil.isEmpty(keyword)){
-            criteria.andUsernameLike("%"+keyword+"%");
-            example.or(example.createCriteria().andNickNameLike("%"+keyword+"%"));
+        if (!StrUtil.isEmpty(keyword)) {
+            criteria.andUsernameLike("%" + keyword + "%");
+            example.or(example.createCriteria().andNickNameLike("%" + keyword + "%"));
         }
         return adminMapper.selectByExample(example);
     }
+
+    @Override
+    public int updateRole(Long adminId, List<Long> roleIds) {
+        int count = roleIds == null ? 0 : roleIds.size();
+        //先删除原来的关系
+        UmsAdminRoleRelationExample adminRoleRelationExample = new UmsAdminRoleRelationExample();
+        adminRoleRelationExample.createCriteria().andAdminIdEqualTo(adminId);
+        adminRoleRelationMapper.deleteByExample(adminRoleRelationExample);
+        //建立新关系
+        if (!CollectionUtils.isEmpty(roleIds)){
+            List<UmsAdminRoleRelation> list=new ArrayList<>();
+            for (Long roleId : roleIds) {
+                UmsAdminRoleRelation roleRelation = new UmsAdminRoleRelation();
+                roleRelation.setAdminId(adminId);
+                roleRelation.setRoleId(roleId);
+                list.add(roleRelation);
+            }
+            adminRoleRelationDao.insertList(list);
+        }
+        //TODO 权限模块
+        return 0;
+    }
+
+
 }

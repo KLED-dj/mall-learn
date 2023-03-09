@@ -1,5 +1,6 @@
 package com.kled.dao;
 
+import com.kled.mbg.model.UmsAdminRoleRelation;
 import com.kled.mbg.model.UmsPermission;
 import com.kled.mbg.model.UmsRole;
 import org.apache.ibatis.annotations.Param;
@@ -19,5 +20,9 @@ public interface UmsAdminRoleRelationDao {
      * 获取用户所有角色
      */
     List<UmsRole> getRoleList(@Param("adminId") Long adminId);
+    /**
+     * 批量插入用户角色关系
+     */
+    int insertList(@Param("list")List<UmsAdminRoleRelation> adminRoleRelationList);
 
 }

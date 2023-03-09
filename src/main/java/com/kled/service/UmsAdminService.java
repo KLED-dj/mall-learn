@@ -3,6 +3,7 @@ package com.kled.service;
 import com.kled.mbg.model.UmsAdmin;
 import com.kled.mbg.model.UmsPermission;
 import com.kled.mbg.model.UmsRole;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -42,4 +43,10 @@ public interface UmsAdminService {
      * 根据用户名或分页查询用户
      */
     List<UmsAdmin> list(String keyword,Integer pageSize,Integer pageNum);
+
+    /**
+     * 修改用户角色关系
+     */
+    @Transactional
+    int updateRole(Long adminId,List<Long> roleIds);
 }
