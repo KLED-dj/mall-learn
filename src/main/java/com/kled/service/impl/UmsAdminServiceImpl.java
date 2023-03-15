@@ -3,10 +3,12 @@ package com.kled.service.impl;
 import cn.hutool.core.util.StrUtil;
 import com.github.pagehelper.PageHelper;
 import com.kled.common.utils.JwtTokenUtil;
+import com.kled.common.utils.SpringUtil;
 import com.kled.dao.UmsAdminRoleRelationDao;
 import com.kled.mbg.mapper.UmsAdminMapper;
 import com.kled.mbg.mapper.UmsAdminRoleRelationMapper;
 import com.kled.mbg.model.*;
+import com.kled.service.UmsAdminCacheService;
 import com.kled.service.UmsAdminService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -99,6 +101,11 @@ public class UmsAdminServiceImpl implements UmsAdminService {
     }
 
     @Override
+    public UmsAdmin getItem(Long id) {
+        return adminMapper.selectByPrimaryKey(id);
+    }
+
+    @Override
     public List<UmsPermission> getPermissionList(Long adminId) {
         return adminRoleRelationDao.getPermissionList(adminId);
     }
@@ -139,8 +146,40 @@ public class UmsAdminServiceImpl implements UmsAdminService {
             adminRoleRelationDao.insertList(list);
         }
         //TODO 权限模块
+        getCacheService().delResourceList(adminId);
         return 0;
     }
 
+    @Override
+    public UmsAdminCacheService getCacheService() {
+        return SpringUtil.getBean(UmsAdminCacheService.class);
+    }
 
+    @Override
+    public int update(Long id, UmsAdmin admin) {
+        admin.setId(id);
+        UmsAdmin rawAdmin = adminMapper.selectByPrimaryKey(id);
+        if (rawAdmin.getPassword().equals(admin.getPassword())){
+            //与原加密密码相同的不需要修改
+            admin.setPassword(null);
+        }else {
+            //与原密码不同的需要加密修改
+            if (StrUtil.isEmpty(admin.getPassword())){
+                admin.setPassword(null);
+            }else {
+                admin.setPassword(passwordEncoder.encode(admin.getPassword()));
+            }
+        }
+        int count = adminMapper.updateByPrimaryKeySelective(admin);
+        getCacheService().delResourceList(id);
+        return count;
+    }
+
+    @Override
+    public int delete(Long id) {
+        getCacheService().delAdmin(id);
+        int count = adminMapper.deleteByPrimaryKey(id);
+        getCacheService().delResourceList(id);
+        return count;
+    }
 }

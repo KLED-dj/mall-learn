@@ -30,6 +30,11 @@ public interface UmsAdminService {
     String login(String username,String password);
 
     /**
+     * 根据用户id获取用户
+     */
+    UmsAdmin getItem(Long id);
+
+    /**
      * 获取用户所有权限（包括角色权限和+-权限）
      */
     List<UmsPermission> getPermissionList(Long adminId);
@@ -49,4 +54,20 @@ public interface UmsAdminService {
      */
     @Transactional
     int updateRole(Long adminId,List<Long> roleIds);
+
+    /**
+     * 获取缓存服务
+     */
+    UmsAdminCacheService getCacheService();
+
+    /**
+     * 修改指定用户信息
+     */
+    int update(Long id,UmsAdmin admin);
+
+    /**
+     * 删除指定用户
+     */
+    int delete(Long id);
+
 }

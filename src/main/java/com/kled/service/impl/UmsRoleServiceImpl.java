@@ -1,5 +1,7 @@
 package com.kled.service.impl;
 
+import cn.hutool.core.util.StrUtil;
+import com.github.pagehelper.PageHelper;
 import com.kled.dao.UmsRoleDao;
 import com.kled.mbg.mapper.UmsRoleMapper;
 import com.kled.mbg.model.UmsMenu;
@@ -26,5 +28,15 @@ public class UmsRoleServiceImpl implements UmsRoleService {
     @Override
     public List<UmsRole> list() {
         return roleMapper.selectByExample(new UmsRoleExample());
+    }
+
+    @Override
+    public List<UmsRole> list(String keyword, Integer pageSize, Integer pageNum) {
+        PageHelper.startPage(pageNum,pageSize);
+        UmsRoleExample example = new UmsRoleExample();
+        if (!StrUtil.isEmpty(keyword)){
+            example.createCriteria().andNameLike("%"+keyword+"%");
+        }
+        return roleMapper.selectByExample(example);
     }
 }
