@@ -1,6 +1,7 @@
 package com.kled.service;
 
 import com.kled.mbg.model.UmsMenu;
+import com.kled.mbg.model.UmsResource;
 import com.kled.mbg.model.UmsRole;
 import io.swagger.models.auth.In;
 import org.springframework.transaction.annotation.Transactional;
@@ -37,8 +38,29 @@ public interface UmsRoleService {
     List<UmsMenu> listMenu(Long roleId);
 
     /**
+     * 获取角色相关资源
+     */
+    List<UmsResource> listResource(Long roleId);
+
+    /**
      * 给角色分配菜单
      */
     @Transactional
     int allocMenu(Long roleId,List<Long> menuIds);
+
+    /**
+     * 给角色分配资源
+     */
+    @Transactional
+    int allocResource(Long roleId,List<Long> resourceIds);
+
+    /**
+     * 修改角色信息
+     */
+    int update(Long id,UmsRole role);
+
+    /**
+     * 批量删除角色
+     */
+    int delete(List<Long> ids);
 }

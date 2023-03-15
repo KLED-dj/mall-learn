@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -44,5 +45,10 @@ public class RedisServiceImpl implements RedisService {
     @Override
     public Boolean del(String key) {
         return stringRedisTemplate.delete(key);
+    }
+
+    @Override
+    public Long del(List<String> keys) {
+        return stringRedisTemplate.delete(keys);
     }
 }

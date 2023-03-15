@@ -1,5 +1,7 @@
 package com.kled.service;
 
+import java.util.List;
+
 public interface RedisService {
     /**
      * 储存数据
@@ -31,5 +33,10 @@ public interface RedisService {
      * 删除属性
      */
     Boolean del(String key);
+
+    /**
+     * 批量删除属性
+     */
+    Long del(List<String> keys);
 
 }

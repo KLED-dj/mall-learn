@@ -5,7 +5,9 @@ import com.github.pagehelper.PageHelper;
 import com.kled.dao.UmsRoleDao;
 import com.kled.mbg.mapper.UmsRoleMapper;
 import com.kled.mbg.mapper.UmsRoleMenuRelationMapper;
+import com.kled.mbg.mapper.UmsRoleResourceRelationMapper;
 import com.kled.mbg.model.*;
+import com.kled.service.UmsAdminCacheService;
 import com.kled.service.UmsRoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,6 +22,10 @@ public class UmsRoleServiceImpl implements UmsRoleService {
     private UmsRoleMapper roleMapper;
     @Autowired
     private UmsRoleMenuRelationMapper roleMenuRelationMapper;
+    @Autowired
+    private UmsRoleResourceRelationMapper roleResourceRelationMapper;
+    @Autowired
+    private UmsAdminCacheService adminCacheService;
 
     @Override
     public int create(UmsRole role) {
@@ -55,6 +61,11 @@ public class UmsRoleServiceImpl implements UmsRoleService {
     }
 
     @Override
+    public List<UmsResource> listResource(Long roleId) {
+        return roleDao.getResourceListByRoleId(roleId);
+    }
+
+    @Override
     public int allocMenu(Long roleId, List<Long> menuIds) {
         //先删除原有关系
         UmsRoleMenuRelationExample example = new UmsRoleMenuRelationExample();
@@ -68,5 +79,37 @@ public class UmsRoleServiceImpl implements UmsRoleService {
             roleMenuRelationMapper.insert(relation);
         }
         return menuIds.size();
+    }
+
+    @Override
+    public int allocResource(Long roleId, List<Long> resourceIds) {
+        //先删除原有关系
+        UmsRoleResourceRelationExample example = new UmsRoleResourceRelationExample();
+        example.createCriteria().andRoleIdEqualTo(roleId);
+        roleResourceRelationMapper.deleteByExample(example);
+        //批量插入新关系
+        for (Long resourceId : resourceIds) {
+            UmsRoleResourceRelation relation = new UmsRoleResourceRelation();
+            relation.setRoleId(roleId);
+            relation.setResourceId(resourceId);
+            roleResourceRelationMapper.insert(relation);
+        }
+        adminCacheService.delResourceListByRole(roleId);
+        return resourceIds.size();
+    }
+
+    @Override
+    public int update(Long id, UmsRole role) {
+        role.setId(id);
+        return roleMapper.updateByPrimaryKeySelective(role);
+    }
+
+    @Override
+    public int delete(List<Long> ids) {
+        UmsRoleExample example = new UmsRoleExample();
+        example.createCriteria().andIdIn(ids);
+        int count = roleMapper.deleteByExample(example);
+        adminCacheService.delResourceListByRoleIds(ids);
+        return count;
     }
 }
