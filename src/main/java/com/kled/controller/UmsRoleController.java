@@ -2,6 +2,7 @@ package com.kled.controller;
 
 import com.kled.common.api.CommonPage;
 import com.kled.common.api.CommonResult;
+import com.kled.mbg.model.UmsAdmin;
 import com.kled.mbg.model.UmsMenu;
 import com.kled.mbg.model.UmsResource;
 import com.kled.mbg.model.UmsRole;
@@ -82,7 +83,6 @@ public class UmsRoleController {
             return CommonResult.success(count);
         }
         return CommonResult.failed();
-
     }
 
     @ApiOperation("批量删除角色")
@@ -94,4 +94,17 @@ public class UmsRoleController {
         }
         return CommonResult.failed();
     }
+
+    @ApiOperation("更改角色启动状态")
+    @PostMapping("/updateStatus/{id}")
+    public CommonResult updateStatus(@PathVariable Long id, @RequestParam("status") Integer status) {
+        UmsRole role = new UmsRole();
+        role.setStatus(status);
+        int count = roleService.update(id, role);
+        if (count > 0) {
+            return CommonResult.success(count);
+        }
+        return CommonResult.failed();
+    }
+
 }

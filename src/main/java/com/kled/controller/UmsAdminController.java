@@ -153,4 +153,16 @@ public class UmsAdminController {
         }
         return CommonResult.failed();
     }
+
+    @ApiOperation("修改角色启用状态")
+    @PostMapping("/updateStatus/{id}")
+    public CommonResult updateStatus(@PathVariable Long id, @RequestParam("status")Integer status) {
+        UmsAdmin admin = new UmsAdmin();
+        admin.setStatus(status);
+        int count = adminService.update(id, admin);
+        if (count > 0) {
+            return CommonResult.success(count);
+        }
+        return CommonResult.failed();
+    }
 }
