@@ -4,7 +4,11 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.kled</groupId>
     <artifactId>mall-learn</artifactId>
+    <packaging>pom</packaging>
     <version>0.0.1-SNAPSHOT</version>
+    <modules>
+        <module>mall-admin</module>
+    </modules>
     <name>mall-learn</name>
     <description>Demo project for Spring Boot</description>
 
